@@ -20,18 +20,31 @@ created healthRecord.js and migraine.js data models and data access objects.
 
 created all but one of hte following routes of the routes:
 post login/signup
+
 post login/
+
 get  healthRecord
+
 del  healthRecord
+
 put  healthRecord
+
 post healthRecord/create
+
 post migraine/create
+
 put  migraine
+
 get  migraine
+
 del  migraine
+
 get  report/getAllRecordsForOneUser
+
 get  report/getSleepHoursBetweenMigraines
+
 get  report/MedicineTakenTextSearch  ... need working
+
 
 
 need to create unit tests.
