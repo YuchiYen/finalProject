@@ -4,6 +4,41 @@ Project Proposal:
 
 Basic health tracker
 
+## Week 9 update
+Change of design:
+Since this App only had one set of CRUD and I need 2 sets, I added a migraine tracker which records migraine start time, duration, medicine taken.
+The other statics I'm tracking - sleep hour, weight, blood pressure are all factors of migraine. I can use aggregate lookup and match to generate reports.
+I have the following route.js
+healthRecord handles all health stat input RUD
+migraine handles all migraine record input RUD
+reports handles all reports - this is a number of get operation - get all health records. get all migraine records. get all records. 
+
+
+Progress:
+
+created healthRecord.js and migraine.js data models and data access objects.
+
+created all but one of hte following routes of the routes:
+post login/signup
+post login/
+get  healthRecord
+del  healthRecord
+put  healthRecord
+post healthRecord/create
+post migraine/create
+put  migraine
+get  migraine
+del  migraine
+get  report/getAllRecordsForOneUser
+get  report/getSleepHoursBetweenMigraines
+get  report/MedicineTakenTextSearch  ... need working
+
+
+need to create unit tests.
+need to remove the components I don't use ( because it's modeled after a previous homework)
+need to clean up, refine some code.
+
+
 ## What is it
 
 An application that allows users to login and record their weight, Blood Pressure, Heart Rate and hours of Sleep.
