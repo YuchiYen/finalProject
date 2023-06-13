@@ -7,7 +7,9 @@ const secret = 'my super secret';
 
 router.post('/signup', async (req, res, next) => {
     const { email, password } = req.body;
-    //console.log( 'req.body' , req.body);
+    
+    // console.log('hit signup here');
+    // console.log( 'req.body' , req.body);
     try {
         if (!email) {
             return res.status(400).send('no email provided');
@@ -16,6 +18,9 @@ router.post('/signup', async (req, res, next) => {
         if (!password) {
             return res.status(400).send('no password provided');
         }
+
+        if (email == "blowUp" && password == "blowUp")
+            throw new Error("purposely fail test")
 
         const user = await retrieveUserByEmail(email);
         if (user) {
@@ -27,13 +32,19 @@ router.post('/signup', async (req, res, next) => {
 
         return res.sendStatus(200);
     } catch (err) {
+        if (err.message == "purposely fail test" )
+            return res.status(400).send('purposely fail tes');
         next(err);
     }
-    next();
+    //next();
 });
 
 router.post('/', async (req, res, next) => {
     const { email, password } = req.body;
+
+    // console.log('hit login here');
+    // console.log('req.body: ', req.body);
+
     try {
         if (!password) {
             return res.status(400).send('no password provided');

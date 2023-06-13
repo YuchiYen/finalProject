@@ -5,6 +5,8 @@ const migraineOAO = require('../daos/migraine');
 
 router.post("/create", isAuthorized, async (req, res, next) => {
     try {
+        if (req.query.errorMode == 'y')
+            throw new Error("error test")
 
         const migraineObj = {
             userId: req.userData._id,
@@ -16,12 +18,15 @@ router.post("/create", isAuthorized, async (req, res, next) => {
         const created = await migraineOAO.createMigraine(migraineObj);
         return res.status(200).json(created);
     } catch (e) {
+        //console.log(e);
         next(e)
     }
 });
 
 router.put("/:id", isAuthorized, async (req, res, next) => {
-    try {
+    try {        
+        if (req.query.errorMode == 'y')
+            throw new Error("error test")
 
         const migraineObj = {
             recordId: req.params.id,
@@ -34,44 +39,64 @@ router.put("/:id", isAuthorized, async (req, res, next) => {
         const updated = await migraineOAO.updateMigraineRecord(migraineObj)
         return res.status(200).json(updated)
     } catch (e) {
+        //console.log(e);
         next(e)
     }
 });
 
 router.get("/", isAuthorized, async (req, res, next) => {
-    try {
+    try {        
+        if (req.query.errorMode == 'y')
+            throw new Error("error test");
+
         const records = await migraineOAO.getAllMigraineByUserId(req.userData._id);
-
-        //console.log('req.userData._id', req.userData._id);
-        // if (req.userData.roles.includes('admin') || req.userData._id === order.userId.toString()) 
-        //     return res.json(order);
-
-        if (records) {
-            //console.log('records', JSON.stringify(records))
-            return res.json(records)
-        }
-
-        res.sendStatus(404);
+        return res.json(records);
     } catch (e) {
+        //console.log(e);
+        next(e);
+    }
+});
+
+router.get("/search", isAuthorized, async (req, res, next) => {
+    try {       
+        if (req.query.errorMode == 'y')
+            throw new Error("error test")
+
+        const searchTerm = req.query.searchTerm;
+
+        //console.log('in /search route, searchTerm is: ' , req.query.searchTerm);
+
+        const records = await migraineOAO.MedicineTakenTextSearch(req.userData._id, searchTerm);
+        return res.json(records)
+              
+    } catch (e) {
+        //console.log(e);
         next(e);
     }
 });
 
 router.delete("/:id", isAuthorized, async (req, res, next) => {
-    try {
+    try {        
+        if (req.query.errorMode == 'y')
+            throw new Error("error test")
+
         const item = await migraineOAO.deleteMigraineById(req.params.id);
         return res.json(item);
     } catch (e) {
+        //console.log(e);
         next(e);
     }
 });
 
-
 router.delete("/", isAuthorized, async (req, res, next) => {
-    try {
+    try {        
+        if (req.query.errorMode == 'y')
+            throw new Error("error test")
+
         const records = await migraineOAO.deleteAllMigraineByUserId(req.userData._id);
         return res.json(records);
     } catch (e) {
+        //console.log(e);
         next(e);
     }
 });

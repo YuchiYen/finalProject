@@ -11,19 +11,19 @@ module.exports.createMigraine = async (migraineRecord) => {
 
 //get
 module.exports.getAllMigraineByUserId = async (userId) => {
-    // const records = await migraine.aggregate([
-    //     { $match: { userId: mongoose.Types.ObjectId(userId) } },
-    //     { $sort: { startDate: 1 } }
-    //   ]).exec();
-
-    try {
-        const migraines = await migraine.find({ userId }).sort({ startDate: -1 }).lean();
-        //console.log('Migraines:', migraines);
-        return migraines
-    } catch (err) {
-        //console.error(err);
-    }
+    const migraines = await migraine.find({ userId }).sort({ startDate: 1 }).lean();
+    return migraines
 }
+
+module.exports.MedicineTakenTextSearch = async (userId, searchTerm) => {
+
+    const migraines = await migraine.find({
+        userId: userId,
+        $text: { $search: searchTerm }
+    }).sort({ startDate: 1 });
+
+    return migraines;
+};
 
 //update
 module.exports.updateMigraineRecord = async (migraineRecord) => {
@@ -40,12 +40,10 @@ module.exports.updateMigraineRecord = async (migraineRecord) => {
     return updatedMigraineRecord;
 }
 
-
-//delete
 module.exports.deleteMigraineById = async (migraineId) => {
     return await migraine.deleteOne({ _id: migraineId });
 }
 
 module.exports.deleteAllMigraineByUserId = async (userId) => {
-    return await migraineId.deleteMany({ userId: userId });
+    return await migraine.deleteMany({ userId: userId });
 }

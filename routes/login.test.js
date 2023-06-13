@@ -53,6 +53,24 @@ describe("/login", () => {
         });
         expect(res.statusCode).toEqual(400);
       });
+
+      it("should return 400 without an email", async () => {
+        const res = await request(server).post("/login/signup").send({
+          password: "dummyPassword"
+        });
+        expect(res.statusCode).toEqual(400);
+      });
+
+      it("shoud blow up", async () => {
+        const res = await request(server).post("/login/signup").send({
+          password: "blowUp",
+          email: "blowUp"
+        });
+        expect(res.statusCode).toEqual(400);
+      });
+      
+
+      
       it("should return 400 with empty password", async () => {
         const res = await request(server).post("/login/signup").send({
           email: user1.email,

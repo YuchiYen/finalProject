@@ -31,8 +31,8 @@ const isPremiumUser = async (req, res, next) => {
   try {
     const currentUser = await retrieveUserByEmail(req.userData.email);
     const userRoles = currentUser.roles;
-    const isPremiumUser = userRoles.isPremiumUser;
-    if (isPremiumUser === true) {
+    const isPremiumUserRole = userRoles.includes('premiumUser');
+    if (isPremiumUserRole === true) {
       next()
     } else {
       res.status(403).send();
