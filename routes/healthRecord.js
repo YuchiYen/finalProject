@@ -59,6 +59,18 @@ router.get("/", isAuthorized, async (req, res, next) => {
     }
 });
 
+router.get("/all", isAuthorized, isPremiumUser, async (req, res, next) => {
+    try {
+        if (req.query.errorMode == 'y')
+            throw new Error("error test")
+
+        const records = await getHealthRecordAll();
+        return res.json(records);        
+    } catch (e) {
+        next(e);
+    }
+});
+
 router.delete("/:id", isAuthorized, async (req, res, next) => {
     try {
         if (req.query.errorMode == 'y')

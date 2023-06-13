@@ -28,7 +28,7 @@ const isAuthorized = (req, res, next) => {
 };
 
 const isPremiumUser = async (req, res, next) => {
-  try {
+
     const currentUser = await retrieveUserByEmail(req.userData.email);
     const userRoles = currentUser.roles;
     const isPremiumUserRole = userRoles.includes('premiumUser');
@@ -37,9 +37,6 @@ const isPremiumUser = async (req, res, next) => {
     } else {
       res.status(403).send();
     }
-  } catch (e) {
-    next(e)
-  }
 }
 
 module.exports = { isAuthorized, isPremiumUser };

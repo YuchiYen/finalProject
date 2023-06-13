@@ -34,10 +34,10 @@ module.exports.getHealthRecordByUserId = async (userId) => {
     return records;
 }
 
-// module.exports.getHealthRecordAll = async () => {
-//     const records = await HealthRcd.find().lean();
-//     return records
-// }
+module.exports.getHealthRecordAll = async () => {
+    const records = await HealthRcd.find().lean();
+    return records
+}
 
 //update
 module.exports.updateHealthRecord = async (healthRecord) => {
